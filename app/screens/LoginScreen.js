@@ -1,19 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button,StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function LoginScreen(){
-  
-    const Button = ({ onPress, children }) => {
-
-        return (
-          <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
-            <Text style={styles.textStyle}>
-                {children}
-            </Text>
-          </TouchableOpacity>
-        );
-      };
   
     return (
     <View style={styles.container}>
@@ -28,6 +17,10 @@ export default function LoginScreen(){
       placeholder = "Password"
       />
       <StatusBar style="auto" />
+      <Button title="login" padding="15" />
+      <Button title="Create account" />
+
+
 
     </View>
   );
@@ -53,21 +46,5 @@ const styles = StyleSheet.create({
       padding: 10,
       marginBottom: 10
   },
-
-  textStyle: {
-    alignSelf: 'center',
-    color: 'teal',
-    fontSize: 16,
-    fontWeight: '600',
-    paddingTop: 10,
-    paddingBottom: 10,
-},
-buttonStyle: {
-    flex: 1,
-    backgroundColor: 'white',
-    marginLeft: 5,
-    marginRight: 5,
-    borderRadius: 50
-},
 
 })
