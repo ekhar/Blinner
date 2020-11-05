@@ -40,7 +40,6 @@ export default function RecipetoSchedule({ route, navigation }){
         data={foods} 
         renderItem={renderFood} 
       />
-      <Text style={{ margin: 10 }}>Post:{route.params?.kind}{route.params?.preptime} {route.params?.name} </Text>
 
 {/*
      <ScrollView style= {styles.foodlist}>
@@ -59,6 +58,21 @@ export default function RecipetoSchedule({ route, navigation }){
         />
   </View>
   );
+
+  function renderFood({item}){
+    return(
+        <TouchableOpacity onPress={()=> navigation.navigate("Home", item)}>
+  <View style = {styles.foodItems}>
+    {/*Cannot figure out how to make it load the variable named logo*/}
+       <Image style = {styles.image}source={require('./logo.jpg')}/>
+      <View style= {styles.foodTexts}>
+       <Text style = {styles.foodTexts}>{item.name}</Text>
+       <Text style = {styles.foodTexts}>{item.preptime}</Text>
+      </View>
+   </View>
+   </TouchableOpacity>
+    )
+}
 }
 
 
@@ -71,20 +85,7 @@ function renderFoods(foods){
 
     return foodlist
 }
-function renderFood({item}){
-        return(
-            <TouchableOpacity>
-      <View style = {styles.foodItems}>
-        {/*Cannot figure out how to make it load the variable named logo*/}
-           <Image style = {styles.image}source={require('./logo.jpg')}/>
-          <View style= {styles.foodTexts}>
-           <Text style = {styles.foodTexts}>{item.name}</Text>
-           <Text style = {styles.foodTexts}>{item.preptime}</Text>
-          </View>
-       </View>
-       </TouchableOpacity>
-        )
-}
+
 
 //to render the list of buttons in the view
 function renderButtons(buttonTitles){

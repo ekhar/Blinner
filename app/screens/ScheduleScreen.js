@@ -4,18 +4,28 @@ import {ScrollView,Image,Button,StyleSheet, Text, TextInput, View, TouchableOpac
 import Food from '../Food'
 import Day from '../Day'
 
-export default function ScheduleScreen({navigation}){
-    let dates = getDates()
+export default function ScheduleScreen({route, navigation}){
+  React.useEffect(() => {
+    if (route.params?.name) {
+      // Post updated, do something with `route.params.post`
+      // For example, send the post to the server
+    }
+  }, [route.params?.name, route.params?.preptime, route.params?.kind])  
+  
+  
+  let dates = getDates()
     const [foods, setFoods] = useState([
-        Food("./logo.png","sandwich","20min", "Lunch"),
-        Food("./logo.png","sandwich","20min", "Lunch"),
-        Food("./logo.png","Bagel","5min", "Breakfast"),
-        Food("./logo.png","Lasagne","5min", "Dinner")
+        Food("./logo.jpg","sandwich","20min", "Lunch"),
+        Food("./logo.jpg","sandwich","20min", "Lunch"),
+        Food("./logo.jpg","Bagel","5min", "Breakfast"),
+        Food("./logo.jpg","Lasagne","5min", "Dinner")
     ])
 
     const [day,setday] = useState(
       Day(foods, dates[1])
     )
+
+    day.foods.push(Food("./logo.jpg", route.params?.name, route.params?.preptime, route.params?.kind) )
 
     let today = Day(foods, dates[1])
     let tommorow = Day([], dates[2])
@@ -30,7 +40,6 @@ export default function ScheduleScreen({navigation}){
         <Button title={dates[3]} onPress={()=> setday(twodays)}/>
         </View>
         <ScrollView style={styles.foodList}>
-        {/*Note renderFood does not dynamically take logos yet */}
         {/*Breakfast*/}
         <Text style = {styles.descriptions}>BREAKFAST</Text>
         {renderFoods(day, "Breakfast")}
