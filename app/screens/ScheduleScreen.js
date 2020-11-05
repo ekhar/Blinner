@@ -1,45 +1,69 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {ScrollView,Image,Button,StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import Food from '../Food'
+import Day from '../Day'
 
-export default function ScheduleScreen(){
+export default function ScheduleScreen({navigation}){
     let dates = getDates()
-    return (
-    <View style={styles.container}>
-    <View style={styles.topbar}>
-      <Button title="settings" />
-      {renderButtons(dates)}
-      </View>
-      <ScrollView style={styles.foodList}>
-      {/*Note renderFood does not dynamically take logos yet */}
-      {/*Breakfast*/}
-      <Text style = {styles.descriptions}>BREAKFAST</Text>
-      {renderFood('./logo.png', 'sandwich', '20 min')}
+    const [foods, setFoods] = useState([
+        Food("./logo.png","sandwich","20min", "Lunch"),
+        Food("./logo.png","sandwich","20min", "Lunch"),
+        Food("./logo.png","Bagel","5min", "Breakfast"),
+        Food("./logo.png","Lasagne","5min", "Dinner")
+    ])
 
-      {/*Lunch*/}
-      <Text style = {styles.descriptions}>Lunch</Text>
-      {renderFood('./logo.png', 'sandwich', '20 min')}
+    const [day,setday] = useState(
+      Day(foods, dates[1])
+    )
 
-      {/*Dinner*/}
-      <Text style = {styles.descriptions}>Dinner</Text>
-      {renderFood('./logo.png', 'sandwich', '20 min')}
-      {renderFood('./logo.png', 'sandwich', '20 min')}
-
-    
-    
-    </ScrollView>
-  </View>
-  );
+    let today = Day(foods, dates[1])
+    let tommorow = Day([], dates[2])
+    let twodays = Day([], dates[3])
+      return (
+      <View style={styles.container}>
+      <View style={styles.topbar}>
+        <Button title="Menu" onPress={()=> navigation.navigate('Menu')} />
+        <Button title={dates[0]}/>
+        <Button title={dates[1]} onPress={()=> setday(today)}/>
+        <Button title={dates[2]} onPress={()=> setday(tommorow)}/>
+        <Button title={dates[3]} onPress={()=> setday(twodays)}/>
+        </View>
+        <ScrollView style={styles.foodList}>
+        {/*Note renderFood does not dynamically take logos yet */}
+        {/*Breakfast*/}
+        <Text style = {styles.descriptions}>BREAKFAST</Text>
+        {renderFoods(day, "Breakfast")}
+      
+        {/*Lunch*/}
+        <Text style = {styles.descriptions}>Lunch</Text>
+        {renderFoods(day,'Lunch')}
+      
+        {/*Dinner*/}
+        <Text style = {styles.descriptions}>Dinner</Text>
+        {renderFoods(day,"Dinner")}
+      </ScrollView>
+      <Button title="+" onPress={()=> navigation.navigate('AddItem')}/>
+    </View>
+    );
 }
 
 
-
+function renderFoods(date,kind){
+  let x = []
+  for(let i=0; i<date.foods.length; i++){
+    if(date.foods[i].kind === kind){
+      x.push(renderFood('./logo.jpg', date.foods[i].name, date.foods[i].preptime))
+    }
+  }
+  return x
+}
 function renderFood(logo, name, time){
         return(
           <TouchableOpacity>
       <View style = {styles.foodItems}>
         {/*Cannot figure out how to make it load the variable named logo*/}
-           <Image style = {styles.image}source={require('./logo.png')}/>
+           <Image style = {styles.image}source={require('./logo.jpg')}/>
           <View style= {styles.foodTexts}>
            <Text style = {styles.foodTexts}>{name}</Text>
            <Text style = {styles.foodTexts}>{time}</Text>
