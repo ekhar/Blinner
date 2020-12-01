@@ -6,6 +6,7 @@ import ScheduleScreen from '../app/screens/ScheduleScreen'
 import RecipetoSchedule from '../app/screens/RecipetoScheduleScreen'
 import MenuScreen from '../app/screens/MenuScreen'
 import NewFood from '../app/screens/newFood'
+import LoginScreen from '../app/screens/LoginScreen'
 const screens = {
     Home:  {
         screen: ScheduleScreen 
@@ -21,6 +22,10 @@ const screens = {
     Menu: {
         screen: MenuScreen
     },
+
+    Login: {
+        screen: LoginScreen
+    }
 
     
 }

@@ -84,7 +84,7 @@ export default class App extends React.Component {
         </View>
       );
     } else {
-      return <HomeScreen />;
+      return <HomeScreen navigation= {this.props.navigation}/>;
     }
   }
 

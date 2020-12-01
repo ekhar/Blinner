@@ -3,8 +3,7 @@ import React, { Component, useState } from 'react';
 import { Button,StyleSheet, Text, TextInput, View } from 'react-native';
 import Food from '../Food';
 
-export default function NewFood({route, navigation}){
-    const { itemId, otherParam } = route.params;
+export default function NewFood({navigation}){
     const [name, setname] = useState("")
     const [preptime, setpreptime] = useState("")
     const [kind, setkind] = useState("")

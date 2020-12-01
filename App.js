@@ -15,7 +15,7 @@ export default function App() {
 //return (<LoginApp/>)
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" mode="modal">
+      <Stack.Navigator initialRouteName="Login" >
 
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={ScheduleScreen} />

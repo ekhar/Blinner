@@ -4,23 +4,13 @@ import { SearchBar, ScrollView,Image,Button,StyleSheet, Text, TextInput, View, F
 import Food from '../Food.js'
 
 
-export default function RecipetoSchedule({ route, navigation }){
-  React.useEffect(() => {
-    if (route.params?.name) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.name, route.params?.preptime, route.params?.kind])
-
-
+export default function RecipetoSchedule({navigation }){
   const [foods, setFoods] = useState([
     Food("./logo.png","sandwich","20min", "Lunch"),
     Food("./logo.png","Bagel","5min", "Breakfast"),
     Food("./logo.png","Lasagne","5min", "Dinner"),
 ])
 
-  
-    foods.push(Food("./logo.png",route.params?.name,route.params?.preptime, route.params?.kind))
     return (
     <View style={styles.container}>
       <TextInput 
@@ -61,7 +51,7 @@ export default function RecipetoSchedule({ route, navigation }){
 
   function renderFood({item}){
     return(
-        <TouchableOpacity onPress={()=> navigation.navigate("Home", item)}>
+        <TouchableOpacity onPress={()=> navigation.navigate("Home")}>
   <View style = {styles.foodItems}>
     {/*Cannot figure out how to make it load the variable named logo*/}
        <Image style = {styles.image}source={require('./logo.jpg')}/>
