@@ -4,14 +4,7 @@ import {ScrollView,Image,Button,StyleSheet, Text, TextInput, View, TouchableOpac
 import Food from '../Food'
 import Day from '../Day'
 
-export default function ScheduleScreen({route, navigation}){
-  React.useEffect(() => {
-    if (route.params?.name) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.name, route.params?.preptime, route.params?.kind])  
-  
+export default function ScheduleScreen({navigation}){
   
   let dates = getDates()
     const [foods, setFoods] = useState([
@@ -24,8 +17,6 @@ export default function ScheduleScreen({route, navigation}){
     const [day,setday] = useState(
       Day(foods, dates[1])
     )
-
-    day.foods.push(Food("./logo.jpg", route.params?.name, route.params?.preptime, route.params?.kind) )
 
     let today = Day(foods, dates[1])
     let tommorow = Day([], dates[2])
