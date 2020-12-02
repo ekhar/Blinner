@@ -7,76 +7,116 @@ import {
   TextInput,
   View,
   FlatList,
+  Image,
 } from "react-native";
-import Food from "../Food";
+import * as firebaseApp from "firebase";
+import { Formik } from "formik";
+import * as ImagePicker from "expo-image-picker";
 
 export default function NewFood({ navigation }) {
-  let food = { name: "", kind: "", image: "", preptime: "", ingredients: [] };
+  let user = firebaseApp.auth().currentUser;
+  let food = { name: "", preptime: "", kind: "", ingredients: [""] };
+
+  async function pickImage(handleChange) {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      handleChange(result.uri);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Create The Recipe</Text>
 
-      <Text>Name:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => {
-          setName(text, food);
+      <Formik
+        initialValues={{
+          name: "",
+          preptime: "",
+          kind: "",
+          ingredients: [""],
+          instructions: "",
+          image: "",
         }}
-      />
-
-      <Text>Prep Time:</Text>
-      <TextInput
-        multiline
-        style={styles.input}
-        onChangeText={(text) => {
-          setPreptime(text, food);
+        onSubmit={(values) => {
+          firebaseApp
+            .database()
+            .ref("users/" + user.uid + "/foods")
+            .push()
+            .set(values);
+          navigation.push("AddItem");
         }}
-      />
+      >
+        {(props) => (
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder="Recipe Name"
+              onChangeText={props.handleChange("name")}
+              value={props.values.name}
+            />
 
-      <Text>Breakfast, Lunch, or Dinner?</Text>
-      <TextInput
-        multiline
-        style={styles.input}
-        onChangeText={(text) => {
-          setKind(text, food);
-        }}
-      />
+            <TextInput
+              multiline
+              style={styles.input}
+              placeholder="Preptime"
+              onChangeText={props.handleChange("preptime")}
+              value={props.values.preptime}
+              keyboardType="numeric"
+            />
 
-      <Text>Ingredients</Text>
+            <TextInput
+              placeholder="Breakfast, Lunch, or Dinner"
+              onChangeText={props.handleChange("kind")}
+              style={styles.input}
+              value={props.values.kind}
+            />
 
-      <View style={styles.row}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => {
-            setIngredients(text, food);
-          }}
-          placeholder="Sub-ingredient"
-        />
-        <Button style={styles.button} title="Add" onPress={() => {}} />
-      </View>
+            <TextInput
+              placeholder="Ingredients"
+              onChangeText={props.handleChange("ingredients")}
+              value={props.values.ingredients}
+              style={styles.input}
+            />
 
-      <FlatList items={food.ingredients} />
-
+            <TextInput
+              multiline
+              placeholder="Cooking Instructions"
+              onChangeText={props.handleChange("instructions")}
+              value={props.values.instructions}
+              style={styles.input}
+            />
+            <View>
+              <Button
+                title="choose a picture"
+                icon="add-a-photo"
+                mode="contained"
+                style={styles.button}
+                onPress={() => {
+                  pickImage(props.handleChange("image"));
+                }}
+              />
+              {props.values.image && props.values.image.length > 0 ? (
+                <Image
+                  source={{ uri: props.values.image }}
+                  style={{ width: 200, height: 200 }}
+                />
+              ) : null}
+            </View>
+            <Button
+              color="maroon"
+              title="Submit"
+              onPress={props.handleSubmit}
+            />
+          </View>
+        )}
+      </Formik>
       <StatusBar style="auto" />
-      <Button
-        title="Add to Recipes"
-        onPress={() => navigation.push("AddItem")}
-      />
     </View>
   );
-
-  function setName(text, food) {
-    food.name = text;
-  }
-  function setPreptime(text, food) {
-    food.preptime = text;
-  }
-  function setIngredients(text, food) {
-    food.ingredients.push(text);
-  }
-  function setKind(text, food) {
-    food.kind = text;
-  }
 }
 const styles = StyleSheet.create({
   container: {

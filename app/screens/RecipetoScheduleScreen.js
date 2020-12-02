@@ -12,38 +12,29 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import Food from "../Food.js";
+import * as firebaseApp from "firebase";
 
 export default function RecipetoSchedule({ navigation }) {
-  const [foods, setFoods] = useState([
-    Food("./logo.png", "sandwich", "20min", "Lunch"),
-    Food("./logo.png", "Bagel", "5min", "Breakfast"),
-    Food("./logo.png", "Lasagne", "5min", "Dinner"),
-  ]);
+  let user = firebaseApp.auth().currentUser;
+  let ref = firebaseApp.database().ref("users/" + user.uid + "/foods");
+  let display1 = [];
+  ref.on("value", (snapshot) => {
+    const data = snapshot.val();
+    for (let name in data) {
+      display1.push(data[name]);
+    }
+  });
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        paddingTop={75}
-        placeholder="Search for item"
-      />
       <View style={styles.topbar}>
         {renderButtons(["All", "Breakfast", "Lunch", "Dinner"])}
 
-        <Button
-          title="Settings"
-          onPress={() => navigation.push("Menu", { id: 36 })}
-        />
+        <Button title="Settings" onPress={() => navigation.push("Menu")} />
       </View>
 
-      <FlatList numColumns={2} data={foods} renderItem={renderFood} />
+      <FlatList numColumns={2} data={display1} renderItem={renderFood} />
 
-      {/*
-     <ScrollView style= {styles.foodlist}>
-         {renderFoods(sandwiches)}
-     </ScrollView>
-*/}
       <Button paddingBottom={50} title="Add to schedule" />
 
       <Button
@@ -58,14 +49,31 @@ export default function RecipetoSchedule({ navigation }) {
   );
 
   function renderFood({ item }) {
+    console.log("RUNNING");
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+      <TouchableOpacity
+        onPress={() => {
+          let recent = firebaseApp
+            .database()
+            .ref("users/" + user.uid + "/recent");
+          recent.once("value", (snapshot) => {
+            let date = snapshot.val();
+
+            firebaseApp
+              .database()
+              .ref("users/" + user.uid + "/" + date)
+              .push()
+              .set(item);
+
+            navigation.navigate("Home");
+          });
+        }}
+      >
         <View style={styles.foodItems}>
-          {/*Cannot figure out how to make it load the variable named logo*/}
-          <Image style={styles.image} source={require("./logo.jpg")} />
+          <Image style={styles.image} source={{ uri: item.image }} />
           <View style={styles.foodTexts}>
             <Text style={styles.foodTexts}>{item.name}</Text>
-            <Text style={styles.foodTexts}>{item.preptime}</Text>
+            <Text style={styles.foodTexts}>{item.preptime + " min"}</Text>
           </View>
         </View>
       </TouchableOpacity>
