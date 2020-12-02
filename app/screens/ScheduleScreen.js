@@ -21,10 +21,12 @@ export default function ScheduleScreen({ navigation }) {
   let display = [];
   const [date, setdate] = useState(dates[0].replace("/", "s"));
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalItem, setModalItem] = useState({});
   function renderFood({ item }) {
     return (
       <View>
         <Modal visible={modalOpen} animationType="slide">
+          {console.log("OPEINING")}
           <View>
             <Button
               title="close"
@@ -32,22 +34,28 @@ export default function ScheduleScreen({ navigation }) {
               onPress={() => setModalOpen(false)}
             />
             <View>
-              <Image style={styles.image} source={{ uri: item.image }} />
+              <Image style={styles.image} source={{ uri: modalItem.image }} />
               <View style={styles.foodTexts}>
                 <Text style={styles.foodTexts}>
-                  {"Recipe Name: " + item.name}
+                  {"Recipe Name: " + modalItem.name}
                 </Text>
                 <Text style={styles.foodTexts}>
-                  {"Preptime: " + item.preptime + " min"}
+                  {"Preptime: " + modalItem.preptime + " min"}
                 </Text>
-                <Text>{"Ingredients: " + item.ingredients}</Text>
-                <Text>{"Meal Type: " + item.kind}</Text>
-                <Text>{"Cooking Instructions: " + item.instructions}</Text>
+                <Text>{"Ingredients: " + modalItem.ingredients}</Text>
+                <Text>{"Meal Type: " + modalItem.kind}</Text>
+                <Text>{"Cooking Instructions: " + modalItem.instructions}</Text>
               </View>
             </View>
           </View>
         </Modal>
-        <TouchableOpacity onPress={() => setModalOpen(true)}>
+        <TouchableOpacity
+          value={item}
+          onPress={() => {
+            setModalItem(item);
+            setModalOpen(true);
+          }}
+        >
           <View style={styles.foodItems}>
             <Image style={styles.image} source={{ uri: item.image }} />
             <View style={styles.foodTexts}>
