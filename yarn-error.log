@@ -1,0 +1,64 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-google-signin
+
+PATH: 
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Vim\vim82\vim.exe;C:\Program Files (x86)\Yarn\bin\;C:\Users\Eric\AppData\Local\Programs\Python\Python38\Scripts\;C:\Users\Eric\AppData\Local\Programs\Python\Python38\;C:\Users\Eric\Desktop\New folder;C:\Users\Eric\AppData\Local\Microsoft\WindowsApps;C:\Users\Eric\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Eric\AppData\Roaming\npm;C:\Program Files (x86)\Vim\vim82\vim.exe;C:\Users\Eric\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  12.18.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, lstat 'C:\Users\Eric\Blinner\node_modules\@babel\parser'
+
+npm manifest: 
+  {
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "eject": "expo eject"
+    },
+    "dependencies": {
+      "@react-native-community/masked-view": "0.1.10",
+      "@react-native-firebase/app": "^8.4.7",
+      "@react-native-firebase/auth": "^9.3.2",
+      "@react-navigation/native": "^5.8.6",
+      "@react-navigation/stack": "^5.12.3",
+      "expo": "~39.0.2",
+      "expo-facebook": "~9.0.0",
+      "expo-secure-store": "~9.2.0",
+      "expo-status-bar": "~1.0.2",
+      "firebase": "7.9.0",
+      "react": "16.13.1",
+      "react-dom": "16.13.1",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+      "react-native-calendars": "^1.403.0",
+      "react-native-gesture-handler": "~1.7.0",
+      "react-native-google-signin": "^2.1.1",
+      "react-native-paper": "^4.3.0",
+      "react-native-reanimated": "~1.13.0",
+      "react-native-safe-area-context": "3.1.4",
+      "react-native-screens": "~2.10.1",
+      "react-native-web": "~0.13.12",
+      "react-navigation": "^4.4.3",
+      "react-navigation-stack": "^2.10.1"
+    },
+    "devDependencies": {
+      "@babel/core": "~7.9.0"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
