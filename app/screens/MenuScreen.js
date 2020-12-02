@@ -12,10 +12,11 @@ import {
 } from "react-native";
 
 export default function MenuScreen({ navigation }) {
+  let user = firebaseApp.auth().currentUser;
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require("./logo.jpg")} />
-      <Text>User Name</Text>
+      <Text>{JSON.stringify(user.displayName)}</Text>
       <Button title={"Schedule"} onPress={() => navigation.navigate("Home")} />
       <Button
         title={"Recipes"}
