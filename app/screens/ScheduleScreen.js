@@ -26,7 +26,6 @@ export default function ScheduleScreen({ navigation }) {
     return (
       <View>
         <Modal visible={modalOpen} animationType="slide">
-          {console.log("OPEINING")}
           <View>
             <Button
               title="close"
@@ -71,9 +70,6 @@ export default function ScheduleScreen({ navigation }) {
   function renderList(x, navigation) {
     let user = firebaseApp.auth().currentUser;
     let ref = firebaseApp.database().ref("users/" + user.uid + "/" + x);
-
-    console.log("Still here");
-    console.log(x);
     ref.on("value", (snapshot) => {
       const data = snapshot.val();
       display = [];
