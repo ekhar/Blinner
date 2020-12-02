@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 import * as firebaseApp from "firebase";
 
@@ -19,17 +20,43 @@ export default function ScheduleScreen({ navigation }) {
   let user = firebaseApp.auth().currentUser;
   let display = [];
   const [date, setdate] = useState(dates[0].replace("/", "s"));
+  const [modalOpen, setModalOpen] = useState(false);
   function renderFood({ item }) {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-        <View style={styles.foodItems}>
-          <Image style={styles.image} source={{ uri: item.image }} />
-          <View style={styles.foodTexts}>
-            <Text style={styles.foodTexts}>{item.name}</Text>
-            <Text style={styles.foodTexts}>{item.preptime + " min"}</Text>
+      <View>
+        <Modal visible={modalOpen} animationType="slide">
+          <View>
+            <Button
+              title="close"
+              size={24}
+              onPress={() => setModalOpen(false)}
+            />
+            <View>
+              <Image style={styles.image} source={{ uri: item.image }} />
+              <View style={styles.foodTexts}>
+                <Text style={styles.foodTexts}>
+                  {"Recipe Name: " + item.name}
+                </Text>
+                <Text style={styles.foodTexts}>
+                  {"Preptime: " + item.preptime + " min"}
+                </Text>
+                <Text>{"Ingredients: " + item.ingredients}</Text>
+                <Text>{"Meal Type: " + item.kind}</Text>
+                <Text>{"Cooking Instructions: " + item.instructions}</Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </Modal>
+        <TouchableOpacity onPress={() => setModalOpen(true)}>
+          <View style={styles.foodItems}>
+            <Image style={styles.image} source={{ uri: item.image }} />
+            <View style={styles.foodTexts}>
+              <Text style={styles.foodTexts}>{item.name}</Text>
+              <Text style={styles.foodTexts}>{item.preptime + " min"}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   }
 
