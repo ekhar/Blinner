@@ -37,7 +37,10 @@ export default class App extends React.Component {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user != null) {
         console.log("We are authenticated now!");
-        Alert.alert("We authneticated with Fireabse!", `Hi ${user}`);
+        Alert.alert(
+          "We authneticated with Firebase!",
+          `Hi ${JSON.stringify(user.displayName)}`
+        );
       }
     });
   }

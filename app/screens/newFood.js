@@ -6,58 +6,56 @@ import {
   Text,
   TextInput,
   View,
-  GridList,
+  FlatList,
 } from "react-native";
 import Food from "../Food";
 
 export default function NewFood({ navigation }) {
-  const [name, setname] = useState("");
-  const [preptime, setpreptime] = useState("");
-  const [kind, setkind] = useState("");
-  const [ingredients, setingredients] = useState([]);
+  let food = { name: "", kind: "", image: "", preptime: "", ingredients: [] };
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Create The Recipe</Text>
 
       <Text>Name:</Text>
-      <TextInput style={styles.input} value={name} onChangeText={setname} />
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => {
+          setName(text, food);
+        }}
+      />
 
       <Text>Prep Time:</Text>
       <TextInput
         multiline
         style={styles.input}
-        value={preptime}
-        onChangeText={setpreptime}
+        onChangeText={(text) => {
+          setPreptime(text, food);
+        }}
       />
 
       <Text>Breakfast, Lunch, or Dinner?</Text>
       <TextInput
         multiline
         style={styles.input}
-        value={kind}
-        onChangeText={setkind}
+        onChangeText={(text) => {
+          setKind(text, food);
+        }}
       />
 
       <Text>Ingredients</Text>
 
       <View style={styles.row}>
         <TextInput
-          style={styles.formInput}
+          style={styles.input}
           onChangeText={(text) => {
-            props.setSubIngredients(text);
+            setIngredients(text, food);
           }}
           placeholder="Sub-ingredient"
         />
-        <Button
-          style={styles.button}
-          title="Add"
-          onPress={() => {
-            props.submitSubIngredients();
-          }}
-        />
+        <Button style={styles.button} title="Add" onPress={() => {}} />
       </View>
 
-      <GridList items={props.food.subIngredients} />
+      <FlatList items={food.ingredients} />
 
       <StatusBar style="auto" />
       <Button
@@ -72,8 +70,20 @@ export default function NewFood({ navigation }) {
       />
     </View>
   );
-}
 
+  function setName(text, food) {
+    food.name = text;
+  }
+  function setPreptime(text, food) {
+    food.preptime = text;
+  }
+  function setIngredients(text, food) {
+    food.ingredients.push(text);
+  }
+  function setKind(text, food) {
+    food.kind = text;
+  }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
