@@ -60,13 +60,7 @@ export default function NewFood({ navigation }) {
       <StatusBar style="auto" />
       <Button
         title="Add to Recipes"
-        onPress={() =>
-          navigation.push("AddItem", {
-            name: name,
-            preptime: preptime,
-            kind: kind,
-          })
-        }
+        onPress={() => navigation.push("AddItem")}
       />
     </View>
   );
