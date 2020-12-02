@@ -29,11 +29,6 @@ export default function RecipetoSchedule({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        paddingTop={75}
-        placeholder="Search for item"
-      />
       <View style={styles.topbar}>
         {renderButtons(["All", "Breakfast", "Lunch", "Dinner"])}
 
