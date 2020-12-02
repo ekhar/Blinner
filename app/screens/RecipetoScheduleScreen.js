@@ -35,8 +35,6 @@ export default function RecipetoSchedule({ navigation }) {
 
       <FlatList numColumns={2} data={display1} renderItem={renderFood} />
 
-      <Button paddingBottom={50} title="Add to schedule" />
-
       <Button
         title="Create new Recipe"
         onPress={() =>
@@ -49,7 +47,6 @@ export default function RecipetoSchedule({ navigation }) {
   );
 
   function renderFood({ item }) {
-    console.log("RUNNING");
     return (
       <TouchableOpacity
         onPress={() => {
