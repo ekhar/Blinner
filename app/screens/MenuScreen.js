@@ -10,12 +10,12 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
+import * as firebaseApp from "firebase";
 
 export default function MenuScreen({ navigation }) {
   let user = firebaseApp.auth().currentUser;
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("./logo.jpg")} />
       <Text>{JSON.stringify(user.displayName)}</Text>
       <Button title={"Schedule"} onPress={() => navigation.navigate("Home")} />
       <Button

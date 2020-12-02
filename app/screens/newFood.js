@@ -9,7 +9,6 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import Food from "../Food";
 import * as firebaseApp from "firebase";
 import { Formik } from "formik";
 import * as ImagePicker from "expo-image-picker";

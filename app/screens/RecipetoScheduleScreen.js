@@ -12,18 +12,16 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import Food from "../Food.js";
 import * as firebaseApp from "firebase";
 
 export default function RecipetoSchedule({ navigation }) {
   let user = firebaseApp.auth().currentUser;
   let ref = firebaseApp.database().ref("users/" + user.uid + "/foods");
-  let display = [];
+  let display1 = [];
   ref.on("value", (snapshot) => {
     const data = snapshot.val();
-    console.log("Running once");
     for (let name in data) {
-      display.push(data[name]);
+      display1.push(data[name]);
     }
   });
 
@@ -35,7 +33,7 @@ export default function RecipetoSchedule({ navigation }) {
         <Button title="Settings" onPress={() => navigation.push("Menu")} />
       </View>
 
-      <FlatList numColumns={2} data={display} renderItem={renderFood} />
+      <FlatList numColumns={2} data={display1} renderItem={renderFood} />
 
       <Button paddingBottom={50} title="Add to schedule" />
 
@@ -51,10 +49,27 @@ export default function RecipetoSchedule({ navigation }) {
   );
 
   function renderFood({ item }) {
+    console.log("RUNNING");
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+      <TouchableOpacity
+        onPress={() => {
+          let recent = firebaseApp
+            .database()
+            .ref("users/" + user.uid + "/recent");
+          recent.once("value", (snapshot) => {
+            let date = snapshot.val();
+
+            firebaseApp
+              .database()
+              .ref("users/" + user.uid + "/" + date)
+              .push()
+              .set(item);
+
+            navigation.navigate("Home");
+          });
+        }}
+      >
         <View style={styles.foodItems}>
-          {/*Cannot figure out how to make it load the variable named logo*/}
           <Image style={styles.image} source={{ uri: item.image }} />
           <View style={styles.foodTexts}>
             <Text style={styles.foodTexts}>{item.name}</Text>
