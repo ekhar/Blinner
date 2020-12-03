@@ -20,13 +20,13 @@ export default function MenuScreen({ navigation }) {
   function getIngredients() {
     let ref = firebaseApp.database().ref("users/" + user.uid);
 
-    ref.once("value", (snapshot) => {
+    ref.on("value", (snapshot) => {
       const data = snapshot.val();
-      display = [];
       for (let name in data) {
         display.push(data[name]);
       }
     });
+    console.log(display);
     display = display.slice(0, -2);
     let ingredients = [];
     for (let name in display) {

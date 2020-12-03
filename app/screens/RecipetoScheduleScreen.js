@@ -27,12 +27,15 @@ export default function RecipetoSchedule({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Button
+        align="left"
+        title="Settings"
+        onPress={() => navigation.push("Menu")}
+      />
       <View style={styles.topbar}>
-        {renderButtons(["All", "Breakfast", "Lunch", "Dinner"])}
-
-        <Button title="Settings" onPress={() => navigation.push("Menu")} />
+        <Text>View All Created Recipes Here</Text>
       </View>
-
+      <Text>Touch Image to Add to Schedule</Text>
       <FlatList numColumns={2} data={display1} renderItem={renderFood} />
 
       <Button

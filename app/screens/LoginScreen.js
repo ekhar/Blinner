@@ -38,7 +38,7 @@ export default class App extends React.Component {
       if (user != null) {
         console.log("We are authenticated now!");
         Alert.alert(
-          "We authneticated with Firebase!",
+          "You are logged in and authneticated with Firebase!",
           `Hi ${JSON.stringify(user.displayName)}`
         );
       }

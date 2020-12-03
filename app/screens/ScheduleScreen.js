@@ -79,6 +79,9 @@ export default function ScheduleScreen({ navigation }) {
     });
     return (
       <View>
+        <Text style={styles.descriptions}>
+          {"Schedule for " + date.replace("s", "/")}
+        </Text>
         <Text style={styles.descriptions}>BREAKFAST</Text>
         <FlatList
           style={styles.foodItems}
@@ -130,8 +133,18 @@ export default function ScheduleScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topbar}>
-        <Button title="Menu" onPress={() => navigation.navigate("Menu")} />
-        <FlatList horizontal={true} data={dates} renderItem={renderDates} />
+        <Button
+          height="4%"
+          width="2%"
+          title="Menu"
+          onPress={() => navigation.navigate("Menu")}
+        />
+        <FlatList
+          paddingTop={50}
+          horizontal={true}
+          data={dates}
+          renderItem={renderDates}
+        />
       </View>
 
       <Button
@@ -171,6 +184,7 @@ const styles = StyleSheet.create({
   //Image to the right, name in middle, calorie count
   foodItems: {
     flexDirection: "row",
+    paddingHorizontal: 23,
   },
 
   //Name of food and how long it takes to cook
